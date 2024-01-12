@@ -12,12 +12,18 @@ display_success() {
 install_app() {
     local app="$1"
 
+    # Print message
+    echo "Updating system..."
+
     # Update and upgrade
     sudo apt update > /dev/null 2>&1 
-    sudo apt upgrade -y > /dev/null 2>&1 
+    sudo apt upgrade -y > /dev/null 2>&1
+
+    # Print message
+    echo "Downloading $app Script..."
 
     # Download script
-    wget "https://raw.githubusercontent.com/gokhangunduz/first-setup/main/installations/$app.sh" -O "./$program_name.sh" > /dev/null 2>&1 || handle_error "Failed to download $app installation script"
+    wget "https://raw.githubusercontent.com/gokhangunduz/first-setup/main/installations/$app.sh" -O "./$app.sh" > /dev/null 2>&1 || handle_error "Failed to download $app installation script"
     
     # Make it executable
     chmod +x "./$app.sh"
@@ -28,6 +34,9 @@ install_app() {
     # Run the script
     "./$app.sh" > /dev/null 2>&1 || handle_error "Failed to execute $app installation script"
     
+    # Print message
+    echo "Cleaning up..."
+
     # Clean up
     rm "./$app.sh"
 
@@ -41,3 +50,4 @@ install_app 'vs-code'
 install_app 'docker'
 install_app 'git'
 install_app 'chrome'
+echo "All done!"
