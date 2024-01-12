@@ -37,7 +37,7 @@ install_vscode() {
     echo "Installing VS Code..."
     
     # Download vs-code.sh script
-    wget 'https://github.com/gokhangunduz/first-setup/installations/vs-code.sh' -O /tmp/vs-code.sh || handle_error "Failed to download VS Code installation script"
+    wget 'https://raw.githubusercontent.com/gokhangunduz/first-setup/main/installations/vs-code.sh' -O /tmp/vs-code.sh || handle_error "Failed to download VS Code installation script"
     
     # Make it executable
     chmod +x ./vs-code.sh
