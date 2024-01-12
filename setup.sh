@@ -13,37 +13,71 @@ display_success() {
 
 # Function to install Docker
 install_docker() {
-    echo "Installing Docker..."
-    # Add Docker installation commands here
-    # Example: sudo apt-get install docker-ce -y
+  # Download script
+    wget 'https://raw.githubusercontent.com/gokhangunduz/first-setup/main/installations/docker.sh' -O ./docker.sh > /dev/null 2>&1 || handle_error "Failed to download VS Code installation script"
+    
+    # Make it executable
+    chmod +x ./docker.sh
+    
+    # Print message
+    echo "Installing Dockers..."
+
+    # Run the script
+    ./docker.sh > /dev/null 2>&1 || handle_error "Failed to execute VS Code installation script"
+    
+    # Clean up
+    rm ./docker.sh
 }
 
 # Function to install Git
 install_git() {
+  # Download script
+    wget 'https://raw.githubusercontent.com/gokhangunduz/first-setup/main/installations/git.sh' -O ./git.sh > /dev/null 2>&1 || handle_error "Failed to download VS Code installation script"
+    
+    # Make it executable
+    chmod +x ./git.sh
+    
+    # Print message
     echo "Installing Git..."
-    # Add Git installation commands here
-    # Example: sudo apt-get install git -y
+
+    # Run the script
+    ./git.sh > /dev/null 2>&1 || handle_error "Failed to execute VS Code installation script"
+    
+    # Clean up
+    rm ./git.sh
 }
 
 # Function to install Chrome
 install_chrome() {
-    echo "Installing Chrome..."
-    # Add Chrome installation commands here
-    # Example: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo dpkg -i google-chrome-stable_current_amd64.deb
+  # Download script
+    wget 'https://raw.githubusercontent.com/gokhangunduz/first-setup/main/installations/chrome.sh' -O ./chrome.sh > /dev/null 2>&1 || handle_error "Failed to download VS Code installation script"
+    
+    # Make it executable
+    chmod +x ./chrome.sh
+    
+    # Print message
+    echo "Installing Google Chrome..."
+
+    # Run the script
+    ./chrome.sh > /dev/null 2>&1 || handle_error "Failed to execute VS Code installation script"
+    
+    # Clean up
+    rm ./chrome.sh
 }
 
 # Function to install VS Code
 install_vscode() {
-    echo "Installing VS Code..."
-    
-    # Download vs-code.sh script
-    wget 'https://raw.githubusercontent.com/gokhangunduz/first-setup/main/installations/vs-code.sh' -O /tmp/vs-code.sh || handle_error "Failed to download VS Code installation script"
+    # Download script
+    wget 'https://raw.githubusercontent.com/gokhangunduz/first-setup/main/installations/vs-code.sh' -O ./vs-code.sh > /dev/null 2>&1 || handle_error "Failed to download VS Code installation script"
     
     # Make it executable
     chmod +x ./vs-code.sh
     
+    # Print message
+    echo "Installing VS Code..."
+
     # Run the script
-    ./vs-code.sh || handle_error "Failed to execute VS Code installation script"
+    ./vs-code.sh > /dev/null 2>&1 || handle_error "Failed to execute VS Code installation script"
     
     # Clean up
     rm ./vs-code.sh
@@ -52,7 +86,8 @@ install_vscode() {
 # ...
 
 # Main script
-cd /Downloads
+cd /home/gokhangunduz/Downloads
+
 
 # Install VS Code
 install_vscode || handle_error "Failed to install VS Code"
@@ -69,7 +104,3 @@ display_success "Git installed successfully"
 # Install Chrome
 install_chrome || handle_error "Failed to install Chrome"
 display_success "Chrome installed successfully"
-
-# Install VS Code
-install_vscode || handle_error "Failed to install VS Code"
-display_success "VS Code installed successfully"
