@@ -1,54 +1,43 @@
 #!/bin/bash
 
-# Function to handle errors
 handle_error() {
     echo "Error: $1"
     exit 1
 }
 
-# Function to display success message
 display_success() {
     echo "Success: $1"
 }
 
-# Function to install a program
-install_program() {
-    local script_url="$1"
-    local program_name="$2"
+install_app() {
+    local app="$1"
+
+    # Update and upgrade
+    sudo apt update > /dev/null 2>&1 
+    sudo apt upgrade -y > /dev/null 2>&1 
 
     # Download script
-    wget "$script_url" -O "./$program_name.sh" > /dev/null 2>&1 || handle_error "Failed to download $program_name installation script"
+    wget "https://raw.githubusercontent.com/gokhangunduz/first-setup/main/installations/$app.sh" -O "./$program_name.sh" > /dev/null 2>&1 || handle_error "Failed to download $app installation script"
     
     # Make it executable
-    chmod +x "./$program_name.sh"
+    chmod +x "./$app.sh"
     
     # Print message
-    echo "Installing $program_name..."
+    echo "Installing $app..."
 
     # Run the script
-    "./$program_name.sh" > /dev/null 2>&1 || handle_error "Failed to execute $program_name installation script"
+    "./$app.sh" > /dev/null 2>&1 || handle_error "Failed to execute $app installation script"
     
     # Clean up
-    rm "./$program_name.sh"
+    rm "./$app.sh"
 
     # Display success message
-    display_success "$program_name installed successfully"
+    display_success "$app installed successfully"
 }
 
 # Main script
-cd "$HOME/Downloads"
-
-sudo apt update
-sudo apt upgrade -y
-
-# Install VS Code
-install_program 'https://raw.githubusercontent.com/gokhangunduz/first-setup/main/installations/vs-code.sh' 'VS Code'
-
-# Install Docker
-install_program 'https://raw.githubusercontent.com/gokhangunduz/first-setup/main/installations/docker.sh' 'Docker'
-
-# Install Git
-install_program 'https://raw.githubusercontent.com/gokhangunduz/first-setup/main/installations/git.sh' 'Git'
-
-# Install Chrome
-install_program 'https://raw.githubusercontent.com/gokhangunduz/first-setup/main/installations/chrome.sh' 'Google Chrome'
+cd "/home/gokhangunduz/Downloads"
+install_app 'vs-code'
+install_app 'docker'
+install_app 'git'
+install_app 'chrome'
