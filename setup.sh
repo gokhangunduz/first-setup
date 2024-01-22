@@ -20,7 +20,7 @@ install_app() {
 
     # Download script
     echo "Downloading $app script..."
-    wget "https://raw.githubusercontent.com/gokhangunduz/first-setup/main/installations/$app.sh" -O "./$app.sh" > /dev/null 2>&1 || handle_error "Failed to download $app installation script"
+    wget "https://raw.githubusercontent.com/gokhangunduz/first-setup/main/packages/$app.sh" -O "./$app.sh" > /dev/null 2>&1 || handle_error "Failed to download $app installation script"
     chmod +x "./$app.sh"
 
     # Run the script
@@ -59,7 +59,8 @@ show_checkbox_dialog() {
 }
 
 # Main script
-cd "/home/gokhangunduz/Downloads"
+prev_user=$(who | awk 'NR==1{print $1}')
+cd "/home/$prev_user/Downloads"
 sudo apt install dialog -y
 
 selected_apps=$(show_checkbox_dialog)
