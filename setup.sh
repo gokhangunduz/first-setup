@@ -1,7 +1,5 @@
 #!/bin/bash
 
-sudo apt install dialog -y
-
 handle_error() {
     echo "Error: $1"
     exit 1
@@ -35,6 +33,9 @@ install_app() {
 
     # Display success message
     echo "$app installed successfully"
+
+    # Update and upgrade
+    update_and_upgrade || handle_error "Failed to update and upgrade system"
 }
 
 # Function to show the checkbox dialog
@@ -59,15 +60,17 @@ show_checkbox_dialog() {
 
 # Main script
 cd "/home/gokhangunduz/Downloads"
+sudo apt install dialog -y
 
 selected_apps=$(show_checkbox_dialog)
-if [ -z "$selected_apps" ]; then
-    handle_error "No applications selected."
+
+# Handle cancel or escape
+if [ $? -ne 0 ] || [ -z "$selected_apps" ]; then
+    handle_error "No applications selected or selection canceled."
 fi
 
 for app in $selected_apps; do
     install_app "$app" || handle_error "Failed to install $app"
 done
 
-update_and_upgrade || handle_error "Failed to update and upgrade system"
 echo "All done!"
