@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo apt install dialog
+sudo apt install dialog -y
 
 handle_error() {
     echo "Error: $1"
