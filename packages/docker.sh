@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Set noninteractive mode for apt-get
+export DEBIAN_FRONTEND=noninteractive
+
 # Add Docker's official GPG key:
 sudo apt-get install ca-certificates curl gnupg -y
 sudo install -m 0755 -d /etc/apt/keyrings
