@@ -8,28 +8,26 @@ handle_error() {
 install_app() {
     local app="$1"
 
-    # Download script
-    echo "Downloading $app script..."
-    wget "https://raw.githubusercontent.com/gokhangunduz/first-setup/main/packages/$app.sh" -O "./$app.sh" > /dev/null 2>&1 || handle_error "Failed to download $app installation script"
-    chmod +x "./$app.sh"
+    chmod +x "$(pwd)/packages/$app.sh"
 
-    # Run the script
     echo "Installing $app..."
-    "./$app.sh" > /dev/null 2>&1 || handle_error "Failed to execute $app installation script"
-
-    # Clean up
-    echo "Cleaning up..."
-    rm "./$app.sh"
-
+    "$(pwd)/packages/$app.sh" > /dev/null 2>&1 || handle_error "Failed to execute $app installation script"
+    
     # Display success message
     echo "$app installed successfully"
-
 }
 
 # Function to show the checkbox dialog
 show_checkbox_dialog() {
     local options=()
-    local app_list=("postman" "vs-code" "docker" "git" "chrome" "remmina")
+    local app_list=()
+
+    # .sh uzantılı dosyaları app_list'e ekle
+    for file in $(pwd)/packages/*.sh; do
+        [ -e "$file" ] || continue  # Dosya var mı kontrol et
+        filename=$(basename "$file" .sh)
+        app_list+=("$filename")
+    done
 
     for app in "${app_list[@]}"; do
         options+=("$app" "" off)
@@ -38,24 +36,19 @@ show_checkbox_dialog() {
     local result
     result=$(dialog --separate-output --clear --checklist "Select applications to install:" 0 0 0 "${options[@]}" 3>&1 1>&2 2>&3)
 
-    # Handle cancel or escape
-    if [ $? -ne 0 ]; then
-        handle_error "Selection canceled."
-    fi
-
     echo "$result"
 }
 
 # Main script
-prev_user=$(who | awk 'NR==1{print $1}')
-cd "/home/$prev_user/Downloads"
-sudo apt update
-sudo apt install dialog -y
+echo "System is preparing..."
+sudo apt update > /dev/null 2>&1
+sudo apt install dialog -y > /dev/null 2>&1
 
 selected_apps=$(show_checkbox_dialog)
 
 # Handle cancel or escape
 if [ $? -ne 0 ] || [ -z "$selected_apps" ]; then
+    clear
     handle_error "No applications selected or selection canceled."
 fi
 
