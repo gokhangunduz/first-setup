@@ -41,7 +41,7 @@ show_checkbox_dialog() {
 # Main script
 echo "System is preparing..."
 sudo apt update > /dev/null 2>&1
-sudo apt install dialog -y > /dev/null 2>&1
+sudo apt install dialog curl wget -y > /dev/null 2>&1
 
 selected_apps=$(show_checkbox_dialog)
 
