@@ -5,18 +5,8 @@ handle_error() {
     exit 1
 }
 
-update_and_upgrade() {
-    # Print message
-    echo "Updating system..."
-    sudo apt update > /dev/null 2>&1 
-    sudo apt upgrade -y > /dev/null 2>&1
-}
-
 install_app() {
     local app="$1"
-
-    # Update and upgrade
-    update_and_upgrade || handle_error "Failed to update and upgrade system"
 
     # Download script
     echo "Downloading $app script..."
@@ -34,8 +24,6 @@ install_app() {
     # Display success message
     echo "$app installed successfully"
 
-    # Update and upgrade
-    update_and_upgrade || handle_error "Failed to update and upgrade system"
 }
 
 # Function to show the checkbox dialog
@@ -61,6 +49,7 @@ show_checkbox_dialog() {
 # Main script
 prev_user=$(who | awk 'NR==1{print $1}')
 cd "/home/$prev_user/Downloads"
+sudo apt update
 sudo apt install dialog -y
 
 selected_apps=$(show_checkbox_dialog)
