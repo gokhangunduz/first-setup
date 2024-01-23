@@ -1,8 +1,9 @@
 #!/bin/bash
 
+# Set noninteractive mode for apt-get
+export DEBIAN_FRONTEND=noninteractive
 
 # Add Docker's official GPG key:
-export DEBIAN_FRONTEND=noninteractive
 sudo apt-get install ca-certificates curl gnupg -y
 sudo install -m 0755 -d /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
@@ -18,5 +19,4 @@ echo \
 sudo apt-get update
 
 # Install Docker with plugins<
-export DEBIAN_FRONTEND=noninteractive
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
