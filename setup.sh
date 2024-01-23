@@ -8,12 +8,12 @@ handle_error() {
 install_app() {
     local app="$1"
 
-    chmod +x "$(pwd)/packages/$app.sh"
+    chmod +x "$(pwd)/packages/$app.sh" || handle_error "Failed to make $app.sh executable"
 
     echo "Installing $app..."
+
     "$(pwd)/packages/$app.sh" > /dev/null 2>&1 || handle_error "Failed to execute $app installation script"
     
-    # Display success message
     echo "$app installed successfully"
 }
 
@@ -22,9 +22,8 @@ show_checkbox_dialog() {
     local options=()
     local app_list=()
 
-    # .sh uzantılı dosyaları app_list'e ekle
     for file in $(pwd)/packages/*.sh; do
-        [ -e "$file" ] || continue  # Dosya var mı kontrol et
+        [ -e "$file" ] || continue
         filename=$(basename "$file" .sh)
         app_list+=("$filename")
     done
