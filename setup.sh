@@ -55,4 +55,9 @@ for app in $selected_apps; do
     install_app "$app" || handle_error "Failed to install $app"
 done
 
+prev_user=$(who | awk 'NR==1{print $1}')
+
+if [ "$prev_user" == "gokhangunduz" ]; then
+    ./settings.sh || handle_error "Failed to execute settings.sh"
+
 echo "All done!"

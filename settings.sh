@@ -13,6 +13,7 @@ gsettings set org.gnome.desktop.interface show-battery-percentage true
 # Theme
 gsettings set org.gnome.desktop.interface gtk-theme 'Yaru-dark'
 gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+
 gnome-shell --replace
 
 echo "All done!"
