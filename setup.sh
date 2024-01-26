@@ -59,5 +59,6 @@ prev_user=$(who | awk 'NR==1{print $1}')
 
 if [ "$prev_user" == "gokhangunduz" ]; then
     ./settings.sh || handle_error "Failed to execute settings.sh"
+fi
 
 echo "All done!"
