@@ -3,6 +3,7 @@
 echo "System is preparing..."
 
 # Dock
+gsettings set org.gnome.shell.extensions.dash-to-dock dock-position 'RIGHT'
 gsettings set org.gnome.shell.extensions.dash-to-dock autohide true
 gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 30
 gsettings set org.gnome.nautilus.icon-view default-zoom-level 'small'
