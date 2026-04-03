@@ -2,32 +2,32 @@
 
 # First Setup Toolkit
 
-Geliştirici ortamını tek komutla kuran Bash script koleksiyonu. Hangi uygulamaları kuracağını kendin seçersin.
+A Bash script collection that sets up a developer environment with a single command. You choose which applications to install.
 
 ---
 
-## Desteklenen İşletim Sistemleri
+## Supported Operating Systems
 
-| Dağıtım | Destek | Not |
-|---------|--------|-----|
-| **Ubuntu 22.04 LTS** | Tam | Birincil hedef |
-| **Ubuntu 24.04 LTS** | Tam | Birincil hedef |
-| **Linux Mint 21 / 22** | Büyük ölçüde | `settings.sh` Yaru temasını bulamaz; GNOME edition önerilir |
-| **Pop!_OS 22.04 / 24.04** | Büyük ölçüde | GNOME tabanlı; Yaru teması yok, diğer adımlar çalışır |
-| **Debian 12 (Bookworm)** | Kısmi | `snap` varsayılanda kurulu değil; Docker repo Ubuntu'ya özgü |
-| Fedora / Arch / openSUSE | Desteklenmez | `apt` kullanılmıyor |
-| Elementary OS | Desteklenmez | Pantheon masaüstü, GNOME değil |
+| Distribution | Support | Notes |
+|--------------|---------|-------|
+| **Ubuntu 22.04 LTS** | Full | Primary target |
+| **Ubuntu 24.04 LTS** | Full | Primary target |
+| **Linux Mint 21 / 22** | Mostly | `settings.sh` won't find Yaru theme; GNOME edition recommended |
+| **Pop!_OS 22.04 / 24.04** | Mostly | GNOME-based; Yaru theme unavailable, other steps work |
+| **Debian 12 (Bookworm)** | Partial | `snap` not installed by default; Docker repo is Ubuntu-specific |
+| Fedora / Arch / openSUSE | Not supported | `apt` is not available |
+| Elementary OS | Not supported | Uses Pantheon desktop, not GNOME |
 
-> `settings.sh` yalnızca GNOME + `dash-to-dock` uzantısı aktif sistemlerde tam çalışır.
+> `settings.sh` works fully only on systems with GNOME and the `dash-to-dock` extension active.
 
 ---
 
-## Kurulacak Paketler
+## Available Packages
 
-| Paket | Yöntem |
-|-------|--------|
+| Package | Method |
+|---------|--------|
 | Google Chrome | `.deb` (Google CDN) |
-| Docker + Compose v2 | Resmi Docker deposu |
+| Docker + Compose v2 | Official Docker repository |
 | Git | `apt` |
 | Node.js (LTS) | `nvm` |
 | VS Code | `.deb` (Microsoft CDN) |
@@ -37,9 +37,9 @@ Geliştirici ortamını tek komutla kuran Bash script koleksiyonu. Hangi uygulam
 
 ---
 
-## Kullanım
+## Usage
 
-### 1. Repoyu klonla
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/gokhangunduz/first-setup
@@ -47,51 +47,50 @@ cd first-setup
 chmod +x ./setup.sh
 ```
 
-### 2. (İsteğe bağlı) Yapılandırmayı özelleştir
+### 2. (Optional) Customize configuration
 
-`config.sh` dosyasını düzenle:
-
-```bash
-# Örnek: kendi git bilgilerini gir
-GIT_USER_NAME="senin-adin"
-GIT_USER_EMAIL="sen@mail.com"
-```
-
-Ya da kurulum sırasında env variable olarak geç:
+Edit `config.sh`:
 
 ```bash
-GIT_USER_NAME="senin-adin" GIT_USER_EMAIL="sen@mail.com" ./setup.sh
+GIT_USER_NAME="your-name"
+GIT_USER_EMAIL="you@mail.com"
 ```
 
-### 3. Kurulumu başlat
+Or pass as environment variables at runtime:
+
+```bash
+GIT_USER_NAME="your-name" GIT_USER_EMAIL="you@mail.com" ./setup.sh
+```
+
+### 3. Run the setup
 
 ```bash
 ./setup.sh
 ```
 
-Terminalde paket listesi çıkar, kurmak istediğin numaraları boşlukla gir (veya `all`):
+A package list appears in the terminal. Enter the numbers of the packages you want to install separated by spaces, or type `all`:
 
 ```
-Mevcut paketler:
-----------------
+Available packages:
+-------------------
   [1] chrome
   [2] docker
   [3] git
   ...
 
-Kurulacak paket numaralarını girin (örn: 1 3 4) veya "all":
+Enter numbers separated by spaces (e.g. 1 3 4) or "all":
 >
 ```
 
-Kurulum tamamlandığında log dosyasını inceleyebilirsin:
+When the installation is complete, you can review the log:
 
 ```bash
 cat /tmp/first-setup.log
 ```
 
-### Dry-run modu
+### Dry-run mode
 
-Herhangi bir şey kurmadan ne kurulacağını görmek için:
+Preview what would be installed without actually installing anything:
 
 ```bash
 ./setup.sh --dry-run
@@ -99,15 +98,15 @@ Herhangi bir şey kurmadan ne kurulacağını görmek için:
 
 ---
 
-## Proje Yapısı
+## Project Structure
 
 ```
 first-setup/
-├── setup.sh        # Ana orkestratör
-├── settings.sh     # GNOME masaüstü ayarları
-├── config.sh       # Kullanıcı yapılandırması
+├── setup.sh        # Main orchestrator
+├── settings.sh     # GNOME desktop settings
+├── config.sh       # User configuration
 ├── lib/
-│   └── utils.sh    # Ortak yardımcı fonksiyonlar
+│   └── utils.sh    # Shared utility functions
 └── packages/
     ├── chrome.sh
     ├── docker.sh
@@ -119,4 +118,4 @@ first-setup/
     └── zsh.sh
 ```
 
-Yeni bir paket eklemek için `packages/` altına `paketadi.sh` dosyası oluştur — setup.sh otomatik olarak algılar.
+To add a new package, create a `packagename.sh` file under `packages/` — setup.sh will detect it automatically.
