@@ -1,16 +1,18 @@
 #!/bin/bash
 
-sudo apt install git
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# shellcheck source=../lib/utils.sh
+source "$SCRIPT_DIR/lib/utils.sh"
+# shellcheck source=../config.sh
+source "$SCRIPT_DIR/config.sh"
 
-prev_user=$(who | awk 'NR==1{print $1}')
+log_info "Git kuruluyor..."
+sudo apt install git -y
 
-if [ "$prev_user" == "gokhangunduz" ]; then
-    git config --global user.name "gokhangunduz"
-    git config --global user.email me@gokhangunduz.com.tr
-    git config --global init.defaultBranch main
-    git config --global color.ui true
+log_info "Git yapılandırılıyor..."
+git config --global user.name "$GIT_USER_NAME"
+git config --global user.email "$GIT_USER_EMAIL"
+git config --global init.defaultBranch "$GIT_DEFAULT_BRANCH"
+git config --global color.ui true
 
-    echo "Git configuration set for user: gokhangunduz"
-else
-    echo "Git configuration not set. Previous user is not gokhangunduz."
-fi
+log_success "Git kuruldu ve yapılandırıldı: $GIT_USER_NAME <$GIT_USER_EMAIL>"
